@@ -22,7 +22,7 @@ function checkUserAuthorized(username: string): boolean {
 }
 
 export const handlerLogin: RequestHandler = (req, res) => {
-  const user = { username: req.body.username };
+  const user = { username: req.body.login };
 
   if (!checkUserAuthorized(user.username)) {
     res.sendStatus(500);
@@ -41,7 +41,9 @@ export const handlerLogin: RequestHandler = (req, res) => {
       res.cookie('xsrf-token', csrfToken, { sameSite: 'strict', secure: false, maxAge: 3600000 });
 
       res.json({
-        login: "ok"
+        name: "first-name",
+        lastName: "last-name",
+        email: "my@mail.ru",
       });
     }
   });

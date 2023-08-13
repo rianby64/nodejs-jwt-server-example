@@ -6,5 +6,5 @@ curl -X POST \
 
 curl -X POST \
      -b cookie.txt \
-     -H "x-xsrf-token: f3180f68441a7d3c3a0c2e7812362574e60ba411794c8cb78759b80de896eeb3b1db467a977c607ffc86f11e4d58804d7afa2b39ebf4927e4236af71ae011f16" \
+     -H "x-xsrf-token: 07fbe2ab345d20c60209ee50b0873b45c5527eeebdf364a789d4caccfa9f2de9c10772c187997ca5dab4cc7657aebb561e9bdbc685d2b826b32f7615b01fe4c4" \
      http://localhost:5000/api/v1/private-endpoint
