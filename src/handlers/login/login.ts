@@ -8,29 +8,33 @@ function generateCsrfToken(length = 64) {
 
 export const secretKey = 'secret-key-for-jwt';
 
-const OK = "OK";
 const myusers = {
-  "user1": OK,
-  "user2": OK,
+  "user1": "password-1",
+  "user2": "password-2",
 }
 
-function checkUserAuthorized(username: string): boolean {
-  const user = myusers[username];
-  console.log(user);
+function checkUserAuthorized(username: string, password: string): boolean {
+  const passwordFromUser = myusers[username];
+  if (!passwordFromUser) {
+    return false;
+  }
 
-  return user == OK;
+  return password == passwordFromUser;
 }
 
 export const handlerLogin: RequestHandler = (req, res) => {
-  const user = { username: req.body.login };
+  const creds = {
+    login: req.body.login,
+    password: req.body.password,
+  };
 
-  if (!checkUserAuthorized(user.username)) {
-    res.sendStatus(500);
+  if (!checkUserAuthorized(creds.login, creds.password)) {
+    res.sendStatus(401);
 
     return;
   }
 
-  jwt.sign({ user: user }, secretKey, { expiresIn: '1h' }, (err, token) => {
+  jwt.sign({ user: creds }, secretKey, { expiresIn: '1h' }, (err, token) => {
     if (err) {
       res.sendStatus(500);
     } else {

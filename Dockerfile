@@ -5,10 +5,22 @@ FROM node:16-alpine
 WORKDIR /app
 
 # Копируем исходный код в контейнер
-COPY . .
+COPY ./jest.config.ts .
+COPY ./package.json .
+COPY ./package-lock.json .
+COPY ./restart.json .
+COPY ./src ./src/.
+COPY ./tsconfig.build.json .
+COPY ./tsconfig.json .
+COPY ./.eslintignore .
+COPY ./.eslintrc.json .
+COPY ./.prettierignore .
+COPY ./.prettierrc .
 
 # Устанавливаем зависимости (если есть)
 RUN npm install
 
+RUN npm run build
+
 # Задаем команду, которая будет запускаться при старте контейнера
-CMD ["npm start"]
+CMD ["node", "build/index.js"]
